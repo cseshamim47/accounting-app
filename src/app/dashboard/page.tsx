@@ -24,7 +24,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export const description = "A donut chart with text";
 
 const pieChartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
