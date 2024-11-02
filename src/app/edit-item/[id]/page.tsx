@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import React, { useState, useEffect } from "react";
 import toast from 'react-hot-toast';
 
-
 import {
   Select,
   SelectContent,
@@ -16,86 +15,97 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { createClient } from "@/utils/supabase/client";
 
-const EditPage = ({ params }: { params: { id: string } }) => {
-  const router = useRouter()
-  const { id } = React.use(params);
-  const [description, setDescription] = useState('')
-  const [account, setAccount] = useState('')
-  const [price, setPrice] = useState('')
-  const [discount, setDiscount] = useState('')
-  const [tax, setTax] = useState('')
-  const [type, setType] = useState('service')
+const EditPage = ({ params: initialParams }: { params: Promise<{ id: string }> }) => {
+  const router = useRouter();
+  const [params, setParams] = useState<{ id: string } | null>(null);
+  const [description, setDescription] = useState('');
+  const [account, setAccount] = useState('');
+  const [price, setPrice] = useState('');
+  const [discount, setDiscount] = useState('');
+  const [tax, setTax] = useState('');
+  const [type, setType] = useState('service');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    try {
-      const fetchItem = async () => {
-        const supabase = createClient()
+    // Unwrap params using React.use
+    initialParams.then(setParams);
+  }, [initialParams]);
+
+  useEffect(() => {
+    if (!params) return; // Wait for params to be set
+
+    const fetchItem = async () => {
+      try {
+        const supabase = createClient();
         const { data, error } = await supabase
           .from('items')
           .select()
-          .eq('id', id)
-          .single()
+          .eq('id', params.id)
+          .single();
 
         if (data) {
-          setDescription(data.description)
-          setAccount(data.account)
-          setPrice(data.price.toString())
-          setDiscount(data.discount?.toString() || '')
-          setTax(data.tax || '')
-          setType(data.type)
+          setDescription(data.description);
+          setAccount(data.account);
+          setPrice(data.price.toString());
+          setDiscount(data.discount?.toString() || '');
+          setTax(data.tax || '');
+          setType(data.type);
         }
+        if (error) {
+          console.error("Error fetching item:", error);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      fetchItem()
-    } catch (error) {
-      // Handle error if needed
-    } finally {
-      setIsLoading(false)
-    }
-  }, [id])
+    fetchItem();
+  }, [params]);
 
   const handleSave = async () => {
-    const supabase = createClient()
-    
+    if (!params) return; // Ensure params are available
+
+    const supabase = createClient();
+
     const { error } = await supabase
       .from("items")
-      .update({ 
-        description, 
-        account, 
+      .update({
+        description,
+        account,
         price: Number(price),
         discount: discount ? Number(discount) : null,
         tax,
-        type
+        type,
       })
-      .eq('id', id)
+      .eq('id', params.id);
 
     if (!error) {
       toast.success('Successfully updated!');
-      router.push('/items')
+      router.push('/items');
+    } else {
+      toast.error('Failed to update item.');
     }
-  }
+  };
 
   if (isLoading) {
     return (
       <div className="m-6 w-full h-[calc(100vh-48px)] flex items-center justify-center">
         <p>Loading...</p>
       </div>
-    )
+    );
   }
-
-  console.log(account);
-  
 
   return (
     <div className="m-6 w-full space-y-4">
       <div className="flex justify-between">
         <p className="text-4xl font-bold">Edit Item</p>
         <div className="space-x-2">
-          <Button variant={"outline"} onClick={()=>router.back()}>Cancel</Button>
+          <Button variant={"outline"} onClick={() => router.back()}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
         </div>
       </div>
