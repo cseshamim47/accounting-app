@@ -1,0 +1,7 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  // "rules": {
+  //   "jsx-quotes": ["off"],         // Disable warnings for JSX quotes
+  //   "quotes": ["error", "single"]  // Enforce single quotes to avoid double-quote escape issues, or "double" if you prefer
+  // }
+}
