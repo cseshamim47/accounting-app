@@ -1,7 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useState, useEffect,use } from "react";
+import React, { useState, useEffect } from "react";
 import toast from 'react-hot-toast';
 
 
@@ -19,9 +19,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from 'next/navigation'
 import { createClient } from "@/utils/supabase/client";
 
-const page = ({ params }: { params: { params: Promise<{ id: string }> } }) => {
+const page = ({ params }: { params: { id: string } }) => {
   const router = useRouter()
-  const { id } = use(params);
+  const { id } = React.use(params);
   const [description, setDescription] = useState('')
   const [account, setAccount] = useState('')
   const [price, setPrice] = useState('')
