@@ -24,7 +24,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-
 const pieChartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
   { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
@@ -93,23 +92,32 @@ const Dashboard = () => {
           <p className="font-bold text-xl">Invoices & Expenses </p>
           <p className="text-sm">This fiscal year </p>
         </div>
-        <div className="rounded-md border bg-white dark:bg-inherit">
-          <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-            <BarChart accessibilityLayer data={chartData}>
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
-              />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <ChartLegend content={<ChartLegendContent />} />
-              <Bar dataKey="income" fill="var(--color-income)" radius={4} />
-              <Bar dataKey="expense" fill="var(--color-expense)" radius={4} />
-            </BarChart>
-          </ChartContainer>
+        <div className="rounded-md w-full bg-white dark:bg-inherit p-10">
+          <div className="flex justify-center">
+              <ChartContainer
+                config={chartConfig}
+                className="min-h-[180px] w-full"
+              >
+                <BarChart accessibilityLayer data={chartData}>
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey="month"
+                    tickLine={false}
+                    tickMargin={10}
+                    axisLine={false}
+                    tickFormatter={(value) => value.slice(0, 3)}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <ChartLegend content={<ChartLegendContent />} />
+                  <Bar dataKey="income" fill="var(--color-income)" radius={4} />
+                  <Bar
+                    dataKey="expense"
+                    fill="var(--color-expense)"
+                    radius={4}
+                  />
+                </BarChart>
+              </ChartContainer>
+          </div>
         </div>
       </div>
 
