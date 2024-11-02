@@ -32,21 +32,7 @@ const items = [
 
 export function AppSidebar() {
   const { theme, setTheme } = useTheme();
-  const [dark, setDark] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    setDark(theme === 'dark');
-  }, [theme]);
   
-  const handleTheme = () => {
-    if (dark) {
-        setDark(false);
-        setTheme('light');
-    } else {
-        setDark(true);
-        setTheme('dark');
-    }
-  };
   return (
     <Sidebar>
       <SidebarContent>
@@ -66,8 +52,15 @@ export function AppSidebar() {
               ))}
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <p className="hover:cursor-pointer" onClick={handleTheme}>
-                    {dark !== null ? (dark===false ? "Dark Theme" : "Light Theme"): 'loading'}
+                  <p className="hover:cursor-pointer" onClick={()=>setTheme('dark')}>
+                    Dark Theme
+                  </p>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <p className="hover:cursor-pointer" onClick={()=>setTheme('light')}>
+                    Light Theme
                   </p>
                 </SidebarMenuButton>
               </SidebarMenuItem>
