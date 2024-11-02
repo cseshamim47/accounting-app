@@ -1,6 +1,6 @@
 import { getAllItems } from "@/utils/db"
 
-export default async function toggle() {
+export default async function Toggle() {
   // const supabase = await createClient();
   // const { data, error } = await supabase
   //   .from("items")

@@ -34,7 +34,7 @@ interface Item {
   price: number;
 }
 
-const page = () => {
+const Items = () => {
   const router = useRouter();
   const [items, setItems] = useState<Item[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -224,4 +224,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Items;

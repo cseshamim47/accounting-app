@@ -194,10 +194,10 @@
 // export default page;
 import React from 'react'
 
-const page = () => {
+const EditItem = () => {
   return (
     <div>page</div>
   )
 }
 
-export default page
+export default EditItem

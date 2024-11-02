@@ -19,7 +19,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from 'next/navigation'
 import { createClient } from "@/utils/supabase/client";
 
-const page = () => {
+const AddItem = () => {
   const router = useRouter()
   const [description, setDescription] = useState('')
   const [account, setAccount] = useState('')
@@ -152,4 +152,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AddItem;

@@ -78,7 +78,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const page = () => {
+const Dashboard = () => {
   const totalVisitors = React.useMemo(() => {
     return pieChartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, []);
@@ -226,4 +226,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Dashboard;
